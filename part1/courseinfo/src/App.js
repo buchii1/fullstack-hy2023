@@ -7,7 +7,6 @@ const Header = (props) => {
 };
 
 const Content = (props) => {
-	console.log(props);
 	const parts = props.parts;
 
 	return (
