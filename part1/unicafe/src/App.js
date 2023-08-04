@@ -27,7 +27,6 @@ const App = () => {
 			<Button handleClick={handleGoodFeedback} text="good" />
 			<Button handleClick={handleNeutralFeedback} text="neutral" />
 			<Button handleClick={handleBadFeedback} text="bad" />
-			<h1>statistics</h1>
 			<Statistics good={good} neutral={neutral} bad={bad} scores={scores} />
 		</div>
 	);
@@ -49,24 +48,37 @@ const Statistics = (props) => {
 	const average = totScore / total;
 	const positive = (good / total) * 100;
 
+	let message;
+	if (scores.length !== 0) {
+		message = (
+			<table>
+				<tbody>
+					<StatisticsLine value={good} text="good" />
+					<StatisticsLine value={neutral} text="neutral" />
+					<StatisticsLine value={bad} text="bad" />
+					<StatisticsLine value={total} text="all" />
+					<StatisticsLine value={average.toFixed(2)} text="average" />
+					<StatisticsLine value={`${positive.toFixed(2)} %`} text="positive" />
+				</tbody>
+			</table>
+		);
+	} else {
+		message = <p>No feedback given.</p>;
+	}
+
 	return (
 		<div>
-			<StatisticsLine value={good} text="good" />
-			<StatisticsLine value={neutral} text="neutral" />
-			<StatisticsLine value={bad} text="bad" />
-			<StatisticsLine value={total} text="all" />
-			<StatisticsLine value={average} text="average" />
-			<StatisticsLine value={`${positive} %`} text="positive" />
+			<h1>statistics</h1>
+			{message}
 		</div>
 	);
 };
 
 const StatisticsLine = ({ value, text }) => (
-	<>
-		<div>
-			{text} {value}
-		</div>
-	</>
+	<tr>
+		<td>{text}</td>
+		<td>{value}</td>
+	</tr>
 );
 
 export default App;
